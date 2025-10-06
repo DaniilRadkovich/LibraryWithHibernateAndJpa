@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная</title>
+    <style>
+        body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 24px; }
+        .container { max-width: 960px; margin: 0 auto; }
+        h1 { font-size: 28px; margin: 0 0 16px; }
+        p { color: #4b5563; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-top: 16px; }
+        .card { border: 1px solid #e5e7eb; border-radius: 10px; padding: 14px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+        .link-button { padding: 10px 14px; border-radius: 6px; background: #f3f4f6; color: #111827; text-decoration: none; display: inline-block; }
+    </style>
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+<div class="container">
+    <h1>Библиотека</h1>
+    <p>Добро пожаловать! Воспользуйтесь ссылками ниже для навигации по сайту.</p>
+    <div class="grid">
+        <div class="card">
+            <h3>Люди</h3>
+            <a class="link-button" th:href="@{/people}">Перейти к людям</a>
+        </div>
+        <div class="card">
+            <h3>Книги</h3>
+            <a class="link-button" th:href="@{/books}">Перейти к книгам</a>
+        </div>
+        <div class="card">
+            <h3>Поиск книг</h3>
+            <a class="link-button" th:href="@{/books/search}">Открыть поиск</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+

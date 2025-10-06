@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Книга</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            margin: 24px;
+        }
+
+        .container {
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 22px;
+            margin: 0 0 16px;
+        }
+
+        form {
+            display: grid;
+            gap: 12px;
+        }
+
+        .field {
+            display: grid;
+            gap: 6px;
+        }
+
+        label {
+            font-weight: 600;
+        }
+
+        input {
+            padding: 10px 12px;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        button {
+            padding: 10px 14px;
+            border: 0;
+            border-radius: 6px;
+            background: #2da44e;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #2c974b;
+        }
+
+        .link-button {
+            padding: 10px 14px;
+            border-radius: 6px;
+            background: #f3f4f6;
+            color: #111827;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .hint {
+            color: #6b7280;
+            font-size: 12px;
+        }
+    </style>
+
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+<div class="container">
+    <h1>Книга</h1>
+    <p th:text="${book.getName() + ', ' + book.getAuthor()+', '+book.getYear()}">VALUE</p>
+
+    <div th:if="${owner}">
+        <span>Сейчас книга у: </span> <span th:text="${owner.getName()}">Person Name</span>
+
+        <form th:method="PATCH" th:action="@{/books/{id}/release(id=${book.getId()})}">
+            <br>
+            <input type="submit" value="Очистить"/>
+        </form>
+    </div>
+
+    <div th:if="${people}">
+        <span>Книга свободна. Кому выдать?</span>
+        <form th:method="PATCH" th:action="@{/books/{id}/assign(id=${book.getId()})}">
+            <br>
+            <label for="person">Выберите читателя:</label>
+            <select th:object="${person}" th:field="*{id}" id="person">
+                <option th:each="person : ${people}" th:value="${person.getId()}" th:text="${person.getName()}">
+                </option>
+            </select>
+            <br>
+            <input type="submit" value="Выдать"/>
+        </form>
+    </div>
+
+    <hr/>
+    <form th:method="GET" th:action="@{/books/{id}/edit(id=${book.getId()})}">
+        <input type="submit" value="Редактировать"/>
+    </form>
+    <br>
+    <form th:method="DELETE" th:action="@{/books/{id}(id=${book.getId()})}">
+        <input type="submit" value="Удалить"/>
+    </form>
+</div>
+</body>
+</html>
+
+

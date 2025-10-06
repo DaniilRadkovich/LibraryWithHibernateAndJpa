@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Новая книга</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            margin: 24px;
+        }
+
+        .container {
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 22px;
+            margin: 0 0 16px;
+        }
+
+        form {
+            display: grid;
+            gap: 12px;
+        }
+
+        .field {
+            display: grid;
+            gap: 6px;
+        }
+
+        label {
+            font-weight: 600;
+        }
+
+        input {
+            padding: 10px 12px;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        button {
+            padding: 10px 14px;
+            border: 0;
+            border-radius: 6px;
+            background: #2da44e;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #2c974b;
+        }
+
+        .link-button {
+            padding: 10px 14px;
+            border-radius: 6px;
+            background: #f3f4f6;
+            color: #111827;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .hint {
+            color: #6b7280;
+            font-size: 12px;
+        }
+    </style>
+
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+<div class="container">
+    <h1>Новая книга</h1>
+
+    <form th:method="POST" th:action="@{/books}" th:object="${book}">
+        <label for="name">Название</label>
+        <input type="text" th:field="*{name}" id="name" placeholder="Например: Война и мир" required>
+        <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+
+        <label for="author">Автор</label>
+        <input type="text" th:field="*{author}" id="author" placeholder="Например: Лев Толстой" required>
+        <div style="color:red" th:if="${#fields.hasErrors('author')}" th:errors="*{author}">Author Error</div>
+
+        <label for="year">Год издания</label>
+        <input type="number" th:field="*{year}" id="year" min="0" max="2030" placeholder="Например: 1869" required>
+        <div style="color:red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Year Error</div>
+        <div class="actions">
+            <input type="submit" value="Создать"/>
+            <a class="link-button" th:href="@{/books}">Отмена</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+
+
